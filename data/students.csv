@@ -1,0 +1,6 @@
+StudentID,Subject,EnrollmentDate,Active
+1001,Math,2025-01-15,Yes
+1002,English,2025-02-01,Yes
+1003,Math,2025-03-12,No
+1004,Coding,2025-04-01,Yes
+1005,Math,2025-05-08,Yes
