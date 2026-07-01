@@ -220,3 +220,83 @@ if st.button("Delete Student"):
 
     st.success("Student deleted!")
     
+st.divider()
+st.header("💰 Add Monthly Revenue")
+
+with st.form("add_revenue"):
+
+    month = st.selectbox(
+        "Month",
+        [
+            "January","February","March","April",
+            "May","June","July","August",
+            "September","October","November","December"
+        ]
+    )
+
+    earnings = st.number_input(
+        "Revenue ($)",
+        min_value=0.0,
+        step=100.0
+    )
+
+    submit_revenue = st.form_submit_button("Add Revenue")
+
+if submit_revenue:
+
+    if month in revenue["Month"].values:
+
+        st.error("This month already exists. Use Edit Revenue instead.")
+
+    else:
+
+        new_row = pd.DataFrame({
+
+            "Month":[month],
+
+            "Revenue":[earnings]
+
+        })
+
+        revenue = pd.concat(
+            [revenue,new_row],
+            ignore_index=True
+        )
+
+        revenue.to_csv(
+            "data/revenue.csv",
+            index=False
+        )
+
+        st.success("Revenue added successfully!")
+st.divider()
+st.header("✏️ Edit Monthly Revenue")
+
+selected_month = st.selectbox(
+    "Select Month",
+    revenue["Month"].tolist()
+)
+
+current = revenue[
+    revenue["Month"] == selected_month
+].iloc[0]
+
+new_revenue = st.number_input(
+    "Revenue",
+    value=float(current["Revenue"]),
+    step=100.0
+)
+
+if st.button("Update Revenue"):
+
+    revenue.loc[
+        revenue["Month"] == selected_month,
+        "Revenue"
+    ] = new_revenue
+
+    revenue.to_csv(
+        "data/revenue.csv",
+        index=False
+    )
+
+    st.success("Revenue updated!")
