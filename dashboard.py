@@ -100,7 +100,7 @@ with st.form("add_student"):
 
     student_id = st.number_input(
         "Student ID",
-        min_value=1000,
+        min_value=10,
         step=1
     )
 
